@@ -1,0 +1,20 @@
+{
+    "name": "huynh-at/minic",
+    "version": "1.0",
+    "description": "HuynhAT Minic Framework",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Minic\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "tienv2i",
+            "email": "tienv2i@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.20"
+    }
+}
