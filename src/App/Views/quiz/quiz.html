@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ static_url }}/css/bootstrap.min.css" >
+    <title>{{ page_title | default('Minic 2') }}</title>
+
     <link rel="stylesheet" href="{{ static_url }}/css/fontawesome.min.css" />
     <script src="{{ static_url }}/js/jquery.min.js"></script>
     <script src="{{ static_url }}/js/jquery-ui.min.js"></script>
@@ -47,7 +49,6 @@
             flex-grow: 1;
         }
     </style>
-    <title>{{ page_title | default('Minic 2') }}</title>
     {% block link_tags %}{% endblock %}
     <script>
         function toggle_all_answer () {

@@ -18,14 +18,16 @@ class QuizzController {
                 '/quiz/tieuhoa' => 'Tiêu hoá',
                 '/quiz/thankinh_noitiet_giacquan' => 'Thần kinh - Nội tiết - Giác quan',
                 '/quiz/thacsi_2024' => 'Thạc sĩ 2024 (chép lại)',
-            ]
+            ],
+            "page_title" => "Ôn thi GP sau ĐH <<2025>>"
         ]);
     }
     function quiz ($app, $params) {
         $quizz_file="quiz/contents/".($params["quiz_name"] ?? "").".html";
         if (View::template_exists($quizz_file)) {
             $app->render("quiz/quiz.html", [
-                "content_file" => $quizz_file
+                "content_file" => $quizz_file,
+                "page_title" => "Ôn thi GP sau ĐH <<2025>>"
             ]);
         } else {
             http_response_code(404);
