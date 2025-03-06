@@ -2,11 +2,12 @@
 
 return [
     'GET' => [
-        // '/' => function ($app, $params) {
-        //     $app->render('home/index.html');
-        // },
-        '/quizz' => 'Minic\App\Controllers\QuizzController@index',
-        '/quizz/{quizz_name:string}' => 'Minic\App\Controllers\QuizzController@quizz',
+        '/' => function ($app, $params) {
+            header('Location: '.base_url('/quiz'));
+            die();
+        },
+        '/quiz' => 'Minic\App\Controllers\QuizzController@index',
+        '/quiz/{quiz_name:string}' => 'Minic\App\Controllers\QuizzController@quiz',
         
     ],
     'POST' => [

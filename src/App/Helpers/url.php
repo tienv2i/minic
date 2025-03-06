@@ -9,7 +9,7 @@ function base_url ($path = "") {
     } else {
         $base_url = $app->request->get_base_url();
     } 
-    return trim($base_url, "/").$path;
+    return rtrim($base_url, "/").$path;
 }
 function static_url ($path = "") {
     $app = Bootstrap::get_instance();
