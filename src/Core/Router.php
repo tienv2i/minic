@@ -20,8 +20,8 @@ class Router
     {
         $requestUri = $this->normalizePath(parse_url($requestUri, PHP_URL_PATH));
         $requestMethod = strtoupper($requestMethod);
-
         foreach ($this->routes[$requestMethod] ?? [] as $path => $route) {
+           
             if (preg_match($route['pattern'], $requestUri, $matches)) {
                 
                 array_shift($matches);
@@ -52,13 +52,11 @@ class Router
 
         $regex = preg_replace_callback('/\{(\w+)(?::(\w+))?\}/', function ($matches) use ($patterns) {
             $paramName = $matches[1];  
+
             $type = $matches[2] ?? 'any';  
-
             $pattern = $patterns[$type] ?? '[^/]+';  
-
             return '(?P<' . $paramName . '>' . $pattern . ')';
         }, $path);
-
         return '#^' . $regex . '$#';
     }
 
@@ -68,17 +66,15 @@ class Router
 
         $paramsAssoc = [];
         foreach ($params as $key => $value) {
-            if (!is_numeric($key)) { // Chỉ lấy key nếu không phải số
+            if (!is_numeric($key)) {
                 $paramsAssoc[$key] = $value;
             }
         }
 
-        // Xử lý hàm callback (Closure hoặc function)
         if (is_callable($handler)) {
             echo call_user_func($handler, $app, $paramsAssoc);
         } 
         
-        // Xử lý kiểu chuỗi "Class@method"
         elseif (is_string($handler) && str_contains($handler, '@')) {
             [$class, $method] = explode('@', $handler);
             if (class_exists($class) && method_exists($class, $method)) {

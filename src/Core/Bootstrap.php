@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * @method static base_url($path = "") {}
+ * @method static static($path = "") {}
+ */
+
 namespace Minic\Core;
 
 class Bootstrap {
@@ -20,7 +26,7 @@ class Bootstrap {
         $default_options = [
             "base_path" => $default_base_path,
             "config_path" => realpath($default_base_path."/config"),
-            "routes_path" => realpath($default_base_path."/routes"),
+            "routes_path" => realpath($default_base_path."/src/routes.php"),
             "views_path" => realpath($default_base_path."/src/App/Views"),
             "helpers_path" => realpath($default_base_path."/src/App/Helpers"),
 
@@ -36,11 +42,11 @@ class Bootstrap {
         $this->load_helpers($options["helpers_path"]);
         $this->load_routes($options["routes_path"]);
 
-        $this->default_view_data = [
+        $this->default_view_data = array_merge([
             "app_name" => $this->config->get("app.app_name", "Minic framework"),
             "base_url" => base_url(),
             "static_url" => static_url(),
-        ];
+        ], $this->config->get('app',[]));
 
         
     }
@@ -56,23 +62,30 @@ class Bootstrap {
         if ($name == 'all') return $this->config->all();
             else return $this->config->get($name, $default);
     }
+    public function load_route_file(string $filePath) {
+        $routes = require $filePath;
+        foreach ($routes as $request_method => $paths) {
+            foreach ($paths as $path => $handler) {
+                if (is_string($handler) && str_contains($handler, '@')) {
+                    [$class, $method] = explode('@', $handler);
+                    $handler = [$class, $method];
+                }
+                $this->router->addRoute(strtoupper($request_method), $path, $handler);
+            }
+        }
 
+
+    }
     public function load_routes(string $routesPath) {
         $routesPath = rtrim($routesPath, DIRECTORY_SEPARATOR);
-    
-        foreach (glob($routesPath . '/*.php') as $file) {
-            $routes = require $file;
-    
-            foreach ($routes as $method => $paths) {
-                foreach ($paths as $path => $handler) {
-                    if (is_string($handler) && str_contains($handler, '@')) {
-                        [$class, $method] = explode('@', $handler);
-                        $handler = [$class, $method];
-                    }
-    
-                    $this->router->addRoute(strtoupper($method), $path, $handler);
-                }
+        if (is_file($routesPath)) {
+            $this->load_route_file($routesPath);
+        }
+        else {
+            foreach (glob($routesPath . '/*.php') as $file) {
+                $this->load_route_file($file);
             }
+
         }
     }
     

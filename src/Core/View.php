@@ -11,12 +11,15 @@ class View
     protected Environment $twig;
     protected static array $globals = [];
     protected static array $functions = [];
-
+    protected static string $templatePath;
+    protected static array $twigOptions;
     public function __construct(string $templatePath, array $options = [])
     {
+        self::$templatePath = $templatePath;
+        self::$twigOptions = $options;
+
         $loader = new FilesystemLoader($templatePath);
         $this->twig = new Environment($loader, $options);
-
   
     }
 
@@ -46,6 +49,9 @@ class View
     public static function addFunction(string $name, callable|string $callback): void
     {
         self::$functions[$name] = $callback;
+    }
+    public static function template_exists($name) : bool {
+        return is_file(realpath(self::$templatePath."/".$name));
     }
 
 }
