@@ -2,9 +2,15 @@
 namespace Minic\App\Controllers;
 
 use Minic\Core\View;
+use Minic\Core\Bootstrap;
 
 class QuizzController {
-    function index ($app, $params) {
+    public function __construct () {
+        Bootstrap::getInstance()->simpleAuth();
+    }
+    function index (Bootstrap $app, $params) {
+
+
         $app->render('quiz/index.html', [
             "links_list" => [
                 '/quiz/daicuong' => 'Đại cương',

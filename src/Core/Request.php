@@ -18,6 +18,20 @@ class Request
         $this->server = $_SERVER;
         $this->headers = $this->parseHeaders();
     }
+    public function post($name=null, $default=""): mixed {
+        if ($name===null):
+            return $this->post;
+        else:
+            return $this->post[$name] ?? $default;
+        endif;
+    }
+    public function get($name="", $default=""): mixed {
+        if ($name=""):
+            return $this->get;
+        else:
+            return $this->get[$name] ?? $default;
+        endif;
+    }
 
     protected function parseHeaders(): array
     {

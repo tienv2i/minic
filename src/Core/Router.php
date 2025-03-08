@@ -5,7 +5,6 @@ namespace Minic\Core;
 class Router
 {
     protected array $routes = [];
-    protected array $middlewares = [];
 
     public function addRoute(string $method, string $path, callable|string|array $handler): void
     {
@@ -112,7 +111,7 @@ class Router
     public function dump_routes()
     {
         echo "<pre>";
-        print_r($this->routes);
+            print_r($this->routes);
         echo "</pre>";
     }
 }

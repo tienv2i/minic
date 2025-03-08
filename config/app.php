@@ -8,5 +8,6 @@ return [
     "static_url" => $root_url."/public/static",
     "public_url" => $root_url."/public",
     "app_name" => "HUYNHAT's Minic Framework",
+    "auth_code" => "012345678"
     
 ];

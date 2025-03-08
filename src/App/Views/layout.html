@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>{{ app_name }}</title>
     <link rel="stylesheet" href="{{static_url}}/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{static_url}}/css/fontawesome.min.css" >
@@ -11,9 +10,10 @@
     <script src="{{static_url}}/js/popper.min.js"></script>
     <script src="{{static_url}}/js/jquery-ui.min.js"></script>
     <script src="{{static_url}}/js/bootstrap.min.js"></script>
-
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     {% block content %}This is default content{% endblock %}
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
