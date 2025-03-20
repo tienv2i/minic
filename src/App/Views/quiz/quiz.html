@@ -51,6 +51,28 @@
     </style>
     {% block link_tags %}{% endblock %}
     <script>
+        window.show_all_answer = show_all_answer =function () {
+            $(".block-quiz-test").each(function() {
+                $(this).attr("data-show_answers", "true");
+  
+                $(this).find("i.text-success").removeClass("hidden");
+                $(this).find("div.quiz_note").removeClass("hidden");
+                $(this).find("label.right-answer").addClass("text-border-success");
+                $(".quiz-button").addClass('btn-danger').removeClass('btn-primary').html('<i class="fa fa-times"></i>');
+        
+            });
+        }
+        window.hide_all_answer = hide_all_answer = function () {
+            $(".block-quiz-test").each(function() {
+                $(this).attr("data-show_answers", "false");
+  
+                $(this).find("i.text-success").addClass("hidden");
+                $(this).find("div.quiz_note").addClass("hidden");
+                $(this).find("label.right-answer").removeClass("text-border-success");
+                $(".quiz-button").addClass('btn-primary').removeClass('btn-danger').html('<i class="fa fa-check-circle"></i>');
+        
+            });
+        }
         function toggle_all_answer () {
             window.show_answer = !window.show_answer;
             let newStatus = window.show_answer ? "true" : "false";
@@ -123,7 +145,14 @@
     <div class="position-fixed fixed-bottom bg-white py-2 border-top no-print">
         <div class="container text-center" style="max-width: 720px;">
             <a href="{{ base_url('/quiz') }}" class="btn btn-primary text-white"><i class="fa fa-home"> </i></a>
-            <button type="button" class="btn btn-primary" id="toggle_answer">Show all answer</button>
+            {# <button type="button" class="btn btn-primary" id="toggle_answer">Show all answer</button> #}
+            <button type="button" class="btn btn-primary" onclick="show_all_answer()">
+                <i class="fa fa-check"></i><i class="fa fa-check"></i>
+            </button>
+            <button type="button" class="btn btn-danger" onclick="hide_all_answer()">
+                <i class="fa fa-times"></i><i class="fa fa-times"></i>
+            </button>
+
             <buttton class="btn btn-success" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" alt="Scroll to top"><i class="fa fa-arrow-up"> </i></buttton>
             <buttton class="btn btn-success" onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });" alt="Scroll to top"><i class="fa fa-arrow-down"> </i></buttton>
         </div>
